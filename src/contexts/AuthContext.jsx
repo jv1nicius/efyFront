@@ -17,13 +17,9 @@ export function AuthProvider({ children }) {
         setLoading(false)
     }, [])
 
-    async function login(name, email, password) {
+    async function login(email) {
         try {
-            const response = await api.post('/usuarios', {
-                name,
-                email,
-                password
-            })
+            const response = await api.post('/usuarios/login', { email })
 
             const userData = response.data
 
@@ -34,7 +30,7 @@ export function AuthProvider({ children }) {
         } catch (error) {
             return {
                 success: false,
-                message: 'Email ou senha inválidos'
+                message: 'Email inválido ou não encontrado'
             }
         }
     }

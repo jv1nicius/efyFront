@@ -11,6 +11,7 @@ function App() {
         <AuthProvider>
             <Routes>
                 <Route path="/" element={<Login />} />
+                <Route path="/sing-up" element={<UserRegister />} />
                 <Route path="/email" element={<EmailForm />} />
             </Routes>
         </AuthProvider>

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Container, TextField, Button, Typography, Link, Snackbar, Fade, Alert } from '@mui/material'
+import { Container, TextField, Button, Typography, Link, Snackbar, Fade, Alert, Divider } from '@mui/material'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function Login() {
@@ -10,7 +10,6 @@ export default function Login() {
 
     const [errorToast, setErrorToast] = useState(false)
 
-    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -24,7 +23,7 @@ export default function Login() {
     const handleLogin = async () => {
         setLoading(true)
         try {
-            const result = await login(name, email, password)
+            const result = await login(email)
 
             if (!result.success) {
                 setErrorToast(true)
@@ -45,14 +44,6 @@ export default function Login() {
             <Typography variant="h4" sx={{ mt: 5, mb: 3 }}>
                 Login
             </Typography>
-
-            <TextField
-                fullWidth
-                label="Nome"
-                margin="normal"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
 
             <TextField
                 fullWidth
@@ -84,9 +75,23 @@ export default function Login() {
             >
                 {loading ? 'Entrando...' : 'Entrar'}
             </Button>
+
+            <Divider sx={{ my: 3 }} />
+
+            <Typography variant="body2" align="center" sx={{ mb: 1 }}>
+                Ainda não tem uma conta?
+            </Typography>
+
+            <Button
+                variant="outlined"
+                fullWidth
+                onClick={() => navigate('/sing-up')}
+            >
+                Criar conta
+            </Button>
             <Snackbar
                 open={errorToast}
-                autoHideDuration={4000}
+                autoHideDuration={2000}
                 onClose={() => setErrorToast(false)}
                 slots={{ transition: Fade }}
                 anchorOrigin={{
