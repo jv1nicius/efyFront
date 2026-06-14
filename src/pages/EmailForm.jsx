@@ -8,8 +8,10 @@ import {
     Alert,
     Snackbar,
     Fade,
-    Link
+    Link,
+    Stack
 } from '@mui/material'
+import HistoryIcon from '@mui/icons-material/History'
 import { api } from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
@@ -27,7 +29,7 @@ export default function EmailForm() {
         destinatarios: '',
         assunto: '',
         message: '',
-        status: 'PENDING',
+        status: 'PENDENTE',
     })
 
     useEffect(() => {
@@ -69,7 +71,7 @@ export default function EmailForm() {
                 destinatarios: '',
                 assunto: '',
                 message: '',
-                status: 'PENDING',
+                status: 'PENDENTE',
             })
         } catch (error) {
             setErrorToast(true)
@@ -82,9 +84,24 @@ export default function EmailForm() {
 
     return (
         <Container maxWidth="md">
-            <Typography variant="h4" sx={{ mt: 8, mb: 3 }}>
-                Nova Notificação
-            </Typography>
+            <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                justifyContent="space-between"
+                alignItems={{ xs: 'flex-start', sm: 'center' }}
+                spacing={2}
+                sx={{ mt: 8, mb: 3 }}
+            >
+                <Typography variant="h4" sx={{ fontWeight: 700 }}>
+                    Nova Notificação
+                </Typography>
+                <Button
+                    variant="outlined"
+                    startIcon={<HistoryIcon />}
+                    onClick={() => navigate('/history')}
+                >
+                    Ver histórico
+                </Button>
+            </Stack>
 
             <form onSubmit={handleSubmit}>
                 <TextField

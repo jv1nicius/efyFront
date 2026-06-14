@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Container, TextField, Button, Typography, Link, Snackbar, Fade, Alert, Divider } from '@mui/material'
+import { Container, TextField, Button, Typography, Snackbar, Fade, Alert, Divider } from '@mui/material'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function Login() {
@@ -20,7 +20,16 @@ export default function Login() {
         }
     }, [isAuthenticated, navigate])
 
+    const isValidEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
     const handleLogin = async () => {
+        if (!isValidEmail(email)) {
+            setErrorToast(true);
+            return;
+        }
+
         setLoading(true)
         try {
             const result = await login(email)
@@ -33,7 +42,6 @@ export default function Login() {
             setErrorToast(true)
         } finally {
             setLoading(false)
-            setName('')
             setEmail('')
             setPassword('')
         }
@@ -51,6 +59,12 @@ export default function Login() {
                 margin="normal"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                error={email.length > 0 && !isValidEmail(email)}
+                helperText={
+                    email.length > 0 && !isValidEmail(email)
+                        ? 'Digite um email válido'
+                        : ''
+                }
             />
 
             <TextField
@@ -85,7 +99,7 @@ export default function Login() {
             <Button
                 variant="outlined"
                 fullWidth
-                onClick={() => navigate('/sing-up')}
+                onClick={() => navigate('/sign-up')}
             >
                 Criar conta
             </Button>
