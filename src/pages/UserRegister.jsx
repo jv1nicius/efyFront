@@ -6,7 +6,7 @@ import { api } from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function UserRegister() {
-    const { isAuthenticated } = useAuth()
+    const { isAuthenticated, login } = useAuth()
     const navigate = useNavigate()
 
     const [name, setName] = useState('')
@@ -26,6 +26,7 @@ export default function UserRegister() {
         e.preventDefault()
         try {
             await api.post('/usuarios', { name, email, password })
+            await login(email)
 
             setSuccessToast(true)
             setName('')

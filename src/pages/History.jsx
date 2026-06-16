@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import EmailStatusCard from '../components/EmailStatusCard'
 import { Container, Typography, Stack, Button } from '@mui/material'
+import { api } from '../services/api'
 
 export default function History() {
     const { isAuthenticated } = useAuth()
@@ -14,7 +15,7 @@ export default function History() {
 
     const loadHistory = async () => {
         try {
-            const { data } = await axios.get('/history')
+            const { data } = await api.get('/emails/historico')
             setResult(data)
         } catch (error) {
             console.error(error)
